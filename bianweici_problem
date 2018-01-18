@@ -1,0 +1,75 @@
+ 一个字符是另一个字符的重新排列组合，那么这两个字符互为便为此，eg：python 和typhon 
+ 
+ solution one: 检查第一个字符串中所有字符是不是都在第二个字符串中出现
+
+def anagram_solution1(s1,s2):
+    a_list=list(s2) #转为列表
+    pos1=0
+    still_ok=True
+    
+    while pos1<len(s1) and still_ok:
+        pos2=0
+        found=False
+        while pos2<len(a_list) and not found:
+            if s1[pos1]==a_list[pos2]:
+                found=True # 若找到字符则不再循环
+            else:
+                pos2=pos2+1
+        if found:
+            a_list[pos2]=None
+        else:
+            still_ok=False  #若存在一个字符未找到则不再循环，直接返回结果
+        pos1= pos1+1
+    return still_ok
+
+
+
+print(anagram_solution1('abcd','dabc'))
+print(anagram_solution1('abcd','daea'))
+
+
+solution two：排序比较法，首先将字符转为列表，然后对列表排序
+def anagram_solution2(s1,s2):
+    a_list1=list(s1)
+    a_list2=list(s2)
+    
+    a_list1.sort()
+    a_list2.sort()
+    
+    pos=0
+    maches=True
+    while pos<len(s1) and maches:
+        if a_list1[pos]==a_list2[pos]:
+            pos=pos+1
+        else:
+            maches=False
+    return maches
+
+print(anagram_solution2('abcd','dabc'))
+print(anagram_solution2('abcd','daea'))
+
+solution 4:计数比较法，任何变位词都有相同数量的a，相同数量的b等等。首先计算每个字符在字符串中出现的次数。最终如果这两个计数器列表相同，则两个字符是变位词
+def anagram_solution4(s1,s2):
+    c1=[0]*26
+    c2=[0]*26
+    
+    for i in range(len(s1)):
+        pos=ord(s1[i])-ord('a')# 数字从0-25,表示是第几个字母
+        c1[pos]=c1[pos]+1  #表示该字母出现了多少次
+    for i in range(len(s2)):
+        pos=ord(s2[i])-ord('a')
+        c2[pos]=c2[pos]+1
+        
+    j=0
+    still_ok=True
+    while j < 26 and still_ok:
+        if c1[j]==c2[j]:
+            j=j+1
+        else:
+            still_ok=False
+    return still_ok
+
+print(anagram_solution4('apple','pleap'))
+
+
+
