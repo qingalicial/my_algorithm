@@ -24,9 +24,9 @@ class Deque:
         
         
         
-        ##回文词问题，正读和反读一样的词
-       ＃用一个双边队列来存储
-       from pythonds.basic.deque import Deque
+##回文词问题，正读和反读一样的词
+＃用一个双边队列来存储
+from pythonds.basic.deque import Deque
 
 def palchecker(astring):
     chardeque = Deque()
