@@ -1,0 +1,40 @@
+class Queue:
+    def __init__(self):
+        self.items = []
+        
+    def isEmpty(self):
+        return self.items == []
+    
+    def enqueue(self,item):
+        self.items.insert(0,item)
+    
+    def dequeue(self):
+        return self.items.pop()
+    
+    def size(self):
+        return len(self.items)
+ 
+
+m=Queue()
+m.isEmpty()
+m.enqueue(4)
+m.enqueue('dog')
+print(m.size())
+
+
+
+# 热土豆，击鼓传花的游戏
+from pythonds.basic.queue import Queue    #需要安装pythonds包
+
+def hotPotato(namelist,num):
+    simplequeue=Queue()
+    for name in namelist:   
+        simplequeue.enqueue(name)  # 所有名字全部入队列
+        
+    while simplequeue.size()>1:
+        for i in range(num):
+            simplequeue.enqueue(simplequeue.dequeue())  #挨个出栈在入队列
+        simplequeue.dequeue()
+    return simplequeue.dequeue()  #最后一个出队列
+
+print(hotPotato(["Bill","David","Susan","Jane","Kent","Brad"],7))
