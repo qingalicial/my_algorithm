@@ -1,0 +1,45 @@
+class Deque:
+    def __init__(self):
+        self.items=[]
+        
+    def isEmpty(self):
+        return self.items == []
+    
+    def addFront(self,item):
+        self.items.append(item)
+        
+    def addRear(self,item):
+        self.items.insert(0,item)
+        
+    def removeFront(self):
+        return self.items.pop()
+    
+    def removeRear(self):
+        return self.items.pop(0)
+    
+    def size(self):
+        return len(self.items)
+        
+        
+        
+        
+        
+        ##回文词问题，正读和反读一样的词
+       ＃用一个双边队列来存储
+       from pythonds.basic.deque import Deque
+
+def palchecker(astring):
+    chardeque = Deque()
+    for ch in astring:
+        chardeque.addRear(ch)#队尾插入
+        
+    still_ok=True
+    
+    while chardeque.size() > 1 and still_ok:
+        first=chardeque.removeFront()
+        last=chardeque.removeRear()
+        if first!=last:
+            still_ok=False        
+    return still_ok
+
+print(palchecker('radar'))
