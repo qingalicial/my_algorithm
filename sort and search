@@ -52,3 +52,30 @@ testlist=[0,1,2,8,13,17,19,32,42]
 print(binarySearch(testlist,3))
 
 #####二分搜索一个有序表  递归版
+def binarySearch(alist,item):
+    if len(alist)==0:
+        return False
+    else:
+        midpoint=len(alist)/2
+        if alist[midpoint]==item:
+            return True
+        else:
+            if alist[midpoint]>item:
+                return binarySearch(alist[:midpoint],item)
+            else:
+                return binarySearch(alist[midpoint+1:],item)
+                
+ ####散列表---O(1)---散列函数
+ #容易产生冲突
+ def hash(astring,tablesize):
+    sum=0
+    for pos in range(len(astring)):
+        sum=sum+ord(astring[pos])
+    return sum%tablesize
+ ##实现映射的抽象数据类型：字典
+ class HashTable:
+    def __init__(self):
+        self.size=11
+        self.slots=[None]*self.size#槽，储存秘钥
+        self.data=[None]*self.size#储存数据
+    
