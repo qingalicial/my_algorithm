@@ -51,7 +51,10 @@ selectionSort(alist)
 print alist 
 
 ###3 插入排序
-##复杂度O(n^2),总是保持一个位置靠前的已经排好的子表，然后每一个新数据项被插入到前边的子表def insertionSort(alist):
+##复杂度O(n^2),总是保持一个位置靠前的已经排好的子表，然后每一个新数据项被插入到前边的子表
+##插入排序的基本操作就是将一个数据插入到已经排好序的有序数据中，从而得到一个新的、个数加一的有序数据，算法适用于少量数据的排序，时间复杂度为O(n^2)。是稳定的排序方法。插入算法把要排序的数组分成两部分：第一部分包含了这个数组的所有元素，但将最后一个元素除外
+##（让数组多一个空间才有插入的位置），而第二部分就只包含这一个元素（即待插入元素）。在第一部分排序完成后，再将这个最后元素插入到已排好序的第一部分中。
+def insertionSort(alist):
     for index in range(1,len(alist)):
         currentvalue=alist[index]
         position=index
@@ -67,15 +70,90 @@ print(list)
 
 
 ##4 希尔排序
+##希尔排序(Shell Sort)是插入排序的一种。也称缩小增量排序，是直接插入排序算法的一种更高效的改进版本。非稳定排序算法
+##希尔排序是把记录按下标的一定增量分组，对每组使用直接插入排序算法排序；随着增量逐渐减少，每组包含的关键词越来越多，
+##当增量减至1时，整个文件恰被分成一组，算法便终止。
+def shellSort(alist):
+    sublistcount=len(alist)//2
+    while sublistcount>0:
+        for startposition in range(sublistcount):
+            gapInsertionSort(alist,startposition,sublistcount)
+        print('After increments of size',sublistcount,'The list is',alist)
+        sublistcount = sublistcount // 2
+        
+        
+def gapInsertionSort(alist,start,gap):
+    for i in range(start+gap,len(alist),gap):
+        currentvalue=alist[i]
+        position=i
+        while position >= gap and alist[position-gap]>currentvalue:
+            alist[position]=alist[position-gap]
+            position=position-gap
+        
+        alist[position]=currentvalue
+alist=[52,26,93,17,77,31,44,55,20]
+shellSort(alist)
+print(alist)
 
 
 
+##5 归并排序：
+#####递归策略，持续的把列表分成两半，如果列表为空或者只有一个元素，那么他就是被排序好了。
 
 
+##6 快速排序
+####和归并排序一样分而治之的方法，但同时不需要使用额外的存储空间。
+###首先选择一个中值，一般是列表的第一项，用来协助拆分这个列表。
+##通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小，
+##然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。
 
 
+下面是博客园的代码
+def quick_sort(lists, left, right):
+    # 快速排序
+    if left >= right:
+        return lists
+    key = lists[left]
+    low = left
+    high = right
+    while left < right:
+        while left < right and lists[right] >= key:
+            right -= 1
+        lists[left] = lists[right]
+        while left < right and lists[left] <= key:
+            left += 1
+        lists[right] = lists[left]
+    lists[right] = key
+    quick_sort(lists, low, left - 1)
+    quick_sort(lists, left + 1, high)
+    return lists
+    
+堆排序
+##堆排序(Heapsort)是指利用堆积树（堆）这种数据结构所设计的一种排序算法，它是选择排序的一种。可以利用数组的特点快速定位指定索引的元素。堆分为大根堆和小根堆，是完全二叉树。大根堆的要求是每个节点的值都不大于其父节点的值，即A[PARENT[i]] >= A[i]。在数组的非降序排序中，需要使用的就是大根堆，因为根据大根堆的要求可知，最大的值一定在堆顶。
 
+def adjust_heap(lists, i, size):
+    lchild = 2 * i + 1
+    rchild = 2 * i + 2
+    max = i
+    if i < size / 2:
+        if lchild < size and lists[lchild] > lists[max]:
+            max = lchild
+        if rchild < size and lists[rchild] > lists[max]:
+            max = rchild
+        if max != i:
+            lists[max], lists[i] = lists[i], lists[max]
+            adjust_heap(lists, max, size)
 
+def build_heap(lists, size):
+    for i in range(0, (size/2))[::-1]:
+        adjust_heap(lists, i, size)
+
+def heap_sort(lists):
+    size = len(lists)
+    build_heap(lists, size)
+    for i in range(0, size)[::-1]:
+        lists[0], lists[i] = lists[i], lists[0]
+        adjust_heap(lists, 0, i)
 
 
 
