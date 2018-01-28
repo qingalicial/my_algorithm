@@ -41,3 +41,25 @@ class Graph:
         return self.vertList.keys()
     def __iter__(self):
         return iter(self.vertList.values())
+        
+        
+##广度优先搜索BFS
+from pythonds.graphs import Graph,Vertex
+from pythonds.basic import Queue
+    def bfs(g,start):
+        start.setDistance(0)##距离
+        start.setPred(None)##设置颜色，灰色，黑色，白色
+        vertQueue = Queue()
+        vertQueue.enqueue(start)
+    while (vertQueue.size() > 0):
+        currentVert = vertQueue.dequeue()
+        for nbr in currentVert.getConnections():
+            if (nbr.getColor() == 'white'):
+                nbr.setColor('gray')
+                nbr.setDistance(currentVert.getDistance() + 1)
+                nbr.setPred(currentVert)
+                vertQueue.enqueue(nbr)
+                
+##DFS深度优先搜索
+
+##广度优先搜索是一次建立搜索树的一层。而DFS深度优先搜索则是尽可能深的搜索树的一支。
