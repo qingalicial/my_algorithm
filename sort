@@ -99,7 +99,31 @@ print(alist)
 
 ##5 归并排序：
 #####递归策略，持续的把列表分成两半，如果列表为空或者只有一个元素，那么他就是被排序好了。
+def merge_sort( li ):
+    if len(li) == 1:
+        return li    
+    mid = len(li) / 2     #取拆分的中间位置
+    ll = merge_sort( li[:mid]  )
+    rl =merge_sort( li[mid:] )
+    return merge(ll , rl)
 
+ #这里接收两个列表：从两个有顺序的列表里边依次取数据比较后放入result ，每次我们分别拿出两个列表中最小的数比较，把较小的放入result
+def merge( left , right ):
+   result = []
+    while len(left)>0 and len(right)>0 :#为了保持稳定性，当遇到相等的时候优先把左侧的数放进结果列表，因为left本来也是大数列中比较靠左的
+          if left[0] <= right[0]:
+             result.append( left.pop(0) )
+          else:
+             result.append( right.pop(0) )
+     #while循环出来之后 说明其中一个数组没有数据了，我们把另一个数组添加到结果数组后面
+     result += left
+     result += right
+     return result
+ 
+ if __name__ == '__main__':
+     li = [5,4 ,3 ,2 ,1]
+    li2 = merge_sort(li)
+     print(li2)
 
 ##6 快速排序
 ####和归并排序一样分而治之的方法，但同时不需要使用额外的存储空间。
